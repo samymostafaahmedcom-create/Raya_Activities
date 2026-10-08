@@ -9,23 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as MyActivitiesRouteImport } from './routes/my-activities'
-import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as AdminIndexRouteImport } from './routes/admin.index'
-import { Route as AdminParticipantsRouteImport } from './routes/admin.participants'
-import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as MyActivitiesRouteImport } from './routes/my-activities'
 import { Route as ActivitiesActivityIdRouteImport } from './routes/activities.$activityId'
+import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as AdminParticipantsRouteImport } from './routes/admin.participants'
 
-const MyActivitiesRoute = MyActivitiesRouteImport.update({
-  id: '/my-activities',
-  path: '/my-activities',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -33,9 +28,19 @@ const AdminRoute = AdminRouteImport.update({
   path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyActivitiesRoute = MyActivitiesRouteImport.update({
+  id: '/my-activities',
+  path: '/my-activities',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivitiesActivityIdRoute = ActivitiesActivityIdRouteImport.update({
+  id: '/activities/$activityId',
+  path: '/activities/$activityId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -43,20 +48,15 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminParticipantsRoute = AdminParticipantsRouteImport.update({
-  id: '/participants',
-  path: '/participants',
-  getParentRoute: () => AdminRoute,
-} as any)
 const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
   id: '/analytics',
   path: '/analytics',
   getParentRoute: () => AdminRoute,
 } as any)
-const ActivitiesActivityIdRoute = ActivitiesActivityIdRouteImport.update({
-  id: '/activities/$activityId',
-  path: '/activities/$activityId',
-  getParentRoute: () => rootRouteImport,
+const AdminParticipantsRoute = AdminParticipantsRouteImport.update({
+  id: '/participants',
+  path: '/participants',
+  getParentRoute: () => AdminRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -131,18 +131,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/my-activities': {
-      id: '/my-activities'
-      path: '/my-activities'
-      fullPath: '/my-activities'
-      preLoaderRoute: typeof MyActivitiesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -152,11 +145,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-activities': {
+      id: '/my-activities'
+      path: '/my-activities'
+      fullPath: '/my-activities'
+      preLoaderRoute: typeof MyActivitiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/activities/$activityId': {
+      id: '/activities/$activityId'
+      path: '/activities/$activityId'
+      fullPath: '/activities/$activityId'
+      preLoaderRoute: typeof ActivitiesActivityIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -166,13 +173,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/participants': {
-      id: '/admin/participants'
-      path: '/participants'
-      fullPath: '/admin/participants'
-      preLoaderRoute: typeof AdminParticipantsRouteImport
-      parentRoute: typeof AdminRoute
-    }
     '/admin/analytics': {
       id: '/admin/analytics'
       path: '/analytics'
@@ -180,12 +180,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAnalyticsRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/activities/$activityId': {
-      id: '/activities/$activityId'
-      path: '/activities/$activityId'
-      fullPath: '/activities/$activityId'
-      preLoaderRoute: typeof ActivitiesActivityIdRouteImport
-      parentRoute: typeof rootRouteImport
+    '/admin/participants': {
+      id: '/admin/participants'
+      path: '/participants'
+      fullPath: '/admin/participants'
+      preLoaderRoute: typeof AdminParticipantsRouteImport
+      parentRoute: typeof AdminRoute
     }
   }
 }
